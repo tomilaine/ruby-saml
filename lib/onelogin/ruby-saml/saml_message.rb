@@ -24,9 +24,8 @@ module OneLogin
       #
       def self.schema
         @schema ||= Mutex.new.synchronize do
-          Dir.chdir(File.expand_path("../../../schemas", __FILE__)) do
-            ::Nokogiri::XML::Schema(File.read("saml-schema-protocol-2.0.xsd"))
-          end
+          schema_path = File.expand_path("../../../schemas/saml-schema-protocol-2.0.xsd", __FILE__)
+          ::Nokogiri::XML::Schema(File.open(schema_path))
         end
       end
 
